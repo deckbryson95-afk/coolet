@@ -6,11 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Coolet</title>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 @font-face {
@@ -36,12 +36,8 @@ body {
     background-position: 0 0, 0 30px, 30px -30px, -30px 0;
 }
 
-button,
-input {
-    font-family: "Nunito Sans", sans-serif;
-}
-
 button {
+    font-family: "Nunito Sans", sans-serif;
     border: none;
     border-radius: 9px;
     padding: 12px 20px;
@@ -53,6 +49,8 @@ button {
 button:hover {
     filter: brightness(.92);
 }
+
+/* HOME PAGE */
 
 #home {
     min-height: 100vh;
@@ -91,6 +89,8 @@ button:hover {
     color: white;
 }
 
+/* LOGIN MODAL */
+
 .modal {
     display: none;
     position: fixed;
@@ -118,6 +118,7 @@ button:hover {
     margin: 12px 0;
     border: 2px solid #ddd;
     border-radius: 8px;
+    font-family: "Nunito Sans", sans-serif;
     font-size: 16px;
 }
 
@@ -131,6 +132,7 @@ button:hover {
     background: #ddd;
     color: #333;
     width: 100%;
+    margin-top: 8px;
 }
 
 #message {
@@ -143,117 +145,170 @@ button:hover {
 #statsPage {
     display: none;
     min-height: 100vh;
-    padding: 25px;
+    padding: 28px;
 }
 
 .stats-layout {
-    max-width: 1100px;
+    width: 100%;
+    max-width: 1400px;
     margin: 0 auto;
     display: flex;
-    gap: 20px;
-    align-items: flex-start;
+    gap: 22px;
+    align-items: stretch;
 }
+
+/* SIDEBAR */
 
 .sidebar {
-    width: 240px;
+    width: 255px;
+    min-height: calc(100vh - 56px);
     flex-shrink: 0;
-    background: #333;
+    background: #292929;
     color: white;
-    border-radius: 12px;
-    padding: 18px;
+    border-radius: 10px;
+    padding: 20px 16px;
 }
 
-.profile {
+.sidebar-logo {
+    font-family: "Puffet", sans-serif;
+    font-size: 38px;
+    color: white;
+    text-align: center;
+    margin: 0 0 28px;
+    text-shadow: 2px 2px #b95b20;
+}
+
+.nav-button {
+    display: block;
+    width: 100%;
+    padding: 12px 14px;
+    margin: 7px 0;
+    color: white;
+    background: transparent;
+    text-align: left;
+    border-radius: 7px;
+}
+
+.nav-button.active {
+    background: #454545;
+}
+
+.nav-button:hover {
+    background: #454545;
+}
+
+/* MAIN CONTENT */
+
+.stats-main {
+    flex: 1;
+    min-width: 0;
+    min-height: calc(100vh - 56px);
+    background: #292929;
+    border-radius: 10px;
+    padding: 26px;
+    color: white;
+}
+
+.profile-area {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
     margin-bottom: 22px;
-    overflow-wrap: anywhere;
 }
 
 .pfp {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
+    width: 75px;
+    height: 75px;
+    border-radius: 12px;
     background: #ffad42;
     border: 3px solid white;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 24px;
+    font-size: 32px;
     font-weight: 900;
     flex-shrink: 0;
 }
 
 .profile-name {
-    font-size: 18px;
+    font-size: 25px;
     font-weight: 900;
+    overflow-wrap: anywhere;
 }
 
-.side-button {
-    display: block;
-    width: 100%;
-    margin: 10px 0;
-    color: white;
-    background: #505050;
-    text-align: left;
+.profile-hint {
+    color: #bbb;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* ACTION BUTTONS */
+
+.profile-actions {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
 }
 
 .reward-button {
     background: #38b957;
+    color: white;
 }
 
 .settings-button {
     background: #238bdb;
-}
-
-.logout-button {
-    background: #d94b42;
-}
-
-.stats-main {
-    flex: 1;
-    min-width: 0;
-    background: #202020;
-    border: 2px solid #202020;
-    border-radius: 12px;
-    padding: 22px;
     color: white;
 }
 
+/* STATS CARDS */
+
 .stats-title {
-    font-size: 27px;
+    font-size: 28px;
     font-weight: 900;
-    margin: 0 0 20px;
+    margin: 0 0 22px;
 }
 
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 15px;
+    gap: 16px;
 }
 
 .stat-card {
-    background: #494949;
-    border-radius: 10px;
+    background: #414141;
+    border-radius: 8px;
     padding: 22px;
-    min-height: 115px;
+    min-height: 135px;
 }
 
 .stat-label {
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 17px;
     color: #ddd;
+    font-weight: 800;
     margin-bottom: 12px;
 }
 
 .stat-number {
-    font-size: 30px;
+    font-size: 34px;
     font-weight: 900;
 }
 
-@media (max-width: 800px) {
+/* LOGOUT */
+
+.logout-button {
+    display: block;
+    width: 100%;
+    margin-top: 25px;
+    background: #d94b42;
+    color: white;
+    text-align: left;
+}
+
+/* RESPONSIVE DESIGN */
+
+@media (max-width: 950px) {
     .stats-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -270,10 +325,13 @@ button:hover {
 
     .sidebar {
         width: 100%;
+        min-height: auto;
     }
 
     .stats-main {
         width: 100%;
+        min-height: auto;
+        padding: 20px;
     }
 }
 
@@ -283,7 +341,7 @@ button:hover {
     }
 
     .logo {
-        font-size: 72px;
+        font-size: 75px;
     }
 }
 </style>
@@ -291,42 +349,74 @@ button:hover {
 
 <body>
 
+<!-- HOME PAGE -->
+
 <div id="home">
     <div class="container">
         <h1 class="logo">COOLET</h1>
         <p class="subtitle">Collect, trade, chat and more!</p>
+
         <div id="buttons">
-            <button class="login-button" onclick="openModal('login')">Login</button>
-            <button class="signup-button" onclick="openModal('signup')">Sign Up</button>
+            <button class="login-button" onclick="openModal('login')">
+                Login
+            </button>
+
+            <button class="signup-button" onclick="openModal('signup')">
+                Sign Up
+            </button>
         </div>
     </div>
 </div>
 
+<!-- STATS PAGE -->
+
 <div id="statsPage">
     <div class="stats-layout">
+
         <aside class="sidebar">
-            <div class="profile">
-                <div class="pfp" id="pfp">C</div>
-                <div class="profile-name" id="profileName">Player</div>
-            </div>
+            <h1 class="sidebar-logo">COOLET</h1>
 
-            <button class="side-button reward-button" onclick="hourlyReward()">
-                Hourly Reward
-            </button>
+            <button class="nav-button active">Stats</button>
+            <button class="nav-button">Leaderboard</button>
+            <button class="nav-button">Chat</button>
+            <button class="nav-button">Market</button>
+            <button class="nav-button">Blooks</button>
 
-            <button class="side-button settings-button" onclick="openSettings()">
-                Settings
-            </button>
-
-            <button class="side-button logout-button" onclick="logoutAccount()">
+            <button class="logout-button" onclick="logoutAccount()">
                 Logout
             </button>
         </aside>
 
         <main class="stats-main">
+
+            <div class="profile-area">
+                <div class="pfp" id="pfp">C</div>
+
+                <div>
+                    <div class="profile-name" id="profileName">
+                        Player
+                    </div>
+
+                    <div class="profile-hint">
+                        Welcome to Coolet!
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-actions">
+                <button class="reward-button" onclick="hourlyReward()">
+                    Hourly Reward
+                </button>
+
+                <button class="settings-button" onclick="openSettings()">
+                    Settings
+                </button>
+            </div>
+
             <h2 class="stats-title">Stats</h2>
 
             <div class="stats-grid">
+
                 <div class="stat-card">
                     <div class="stat-label">Tokens</div>
                     <div class="stat-number" id="tokens">0</div>
@@ -341,28 +431,51 @@ button:hover {
                     <div class="stat-label">Texts Sent</div>
                     <div class="stat-number" id="textsSent">0</div>
                 </div>
+
             </div>
+
         </main>
     </div>
 </div>
 
+<!-- LOGIN / SIGNUP MODAL -->
+
 <div class="modal" id="modal">
     <div class="modal-content">
+
         <h2 id="modalTitle">Login</h2>
 
-        <input id="username" placeholder="Username" maxlength="20" autocomplete="username">
+        <input
+            id="username"
+            placeholder="Username"
+            maxlength="20"
+            autocomplete="username"
+        >
 
-        <input id="password" type="password" placeholder="Password" autocomplete="current-password">
+        <input
+            id="password"
+            type="password"
+            placeholder="Password"
+            autocomplete="current-password"
+        >
 
-        <button class="submit-button" onclick="submitAccount()">Continue</button>
+        <button class="submit-button" onclick="submitAccount()">
+            Continue
+        </button>
 
-        <button class="close-button" onclick="closeModal()">Cancel</button>
+        <button class="close-button" onclick="closeModal()">
+            Cancel
+        </button>
 
         <p id="message"></p>
+
     </div>
 </div>
 
 <script>
+
+/* SUPABASE CONNECTION */
+
 const SUPABASE_URL = "https://mfxmatyyvrjxkleiratk.supabase.co";
 const SUPABASE_KEY = "sb_publishable_kfMaUjlxX04k1YWkJTu9mw_fq24cRu9";
 
@@ -373,6 +486,8 @@ const supabaseClient = window.supabase.createClient(
 
 let currentMode = "login";
 let currentUserId = null;
+
+/* OPEN LOGIN OR SIGNUP */
 
 function openModal(mode) {
     currentMode = mode;
@@ -387,12 +502,18 @@ function openModal(mode) {
     document.getElementById("password").value = "";
 }
 
+/* CLOSE MODAL */
+
 function closeModal() {
     document.getElementById("modal").style.display = "none";
 }
 
+/* LOGIN AND SIGNUP */
+
 async function submitAccount() {
-    const username = document.getElementById("username").value.trim().toLowerCase();
+    const username = document.getElementById("username")
+        .value.trim().toLowerCase();
+
     const password = document.getElementById("password").value;
     const message = document.getElementById("message");
 
@@ -403,7 +524,8 @@ async function submitAccount() {
     }
 
     if (password.length < 6) {
-        message.textContent = "Password must be at least 6 characters.";
+        message.textContent =
+            "Password must be at least 6 characters.";
         return;
     }
 
@@ -412,11 +534,13 @@ async function submitAccount() {
     message.textContent = "Please wait...";
 
     if (currentMode === "signup") {
-        const { data: existing, error: lookupError } = await supabaseClient
-            .from("profiles")
-            .select("username")
-            .eq("username", username)
-            .maybeSingle();
+
+        const { data: existing, error: lookupError } =
+            await supabaseClient
+                .from("profiles")
+                .select("username")
+                .eq("username", username)
+                .maybeSingle();
 
         if (lookupError) {
             message.textContent = lookupError.message;
@@ -428,10 +552,11 @@ async function submitAccount() {
             return;
         }
 
-        const { data, error } = await supabaseClient.auth.signUp({
-            email: email,
-            password: password
-        });
+        const { data, error } =
+            await supabaseClient.auth.signUp({
+                email: email,
+                password: password
+            });
 
         if (error) {
             message.textContent = error.message;
@@ -444,26 +569,30 @@ async function submitAccount() {
             return;
         }
 
-        const { error: profileError } = await supabaseClient
-            .from("profiles")
-            .insert({
-                id: data.user.id,
-                username: username
-            });
+        const { error: profileError } =
+            await supabaseClient
+                .from("profiles")
+                .insert({
+                    id: data.user.id,
+                    username: username
+                });
 
         if (profileError) {
             message.textContent =
-                "Account created, but profile setup failed: " + profileError.message;
+                "Account created, but profile setup failed: " +
+                profileError.message;
             return;
         }
 
         await showAccount(data.user.id, username);
 
     } else {
-        const { data, error } = await supabaseClient.auth.signInWithPassword({
-            email: email,
-            password: password
-        });
+
+        const { data, error } =
+            await supabaseClient.auth.signInWithPassword({
+                email: email,
+                password: password
+            });
 
         if (error) {
             message.textContent = error.message;
@@ -474,6 +603,8 @@ async function submitAccount() {
     }
 }
 
+/* SHOW ACCOUNT */
+
 async function showAccount(userId, username) {
     currentUserId = userId;
 
@@ -481,21 +612,26 @@ async function showAccount(userId, username) {
 
     document.getElementById("home").style.display = "none";
     document.getElementById("statsPage").style.display = "block";
+
     document.getElementById("profileName").textContent = username;
+
     document.getElementById("pfp").textContent =
         username.charAt(0).toUpperCase();
 
     await loadStats();
 }
 
+/* LOAD STATS */
+
 async function loadStats() {
     if (!currentUserId) return;
 
-    const { data: profile, error } = await supabaseClient
-        .from("profiles")
-        .select("tokens, collection, texts_sent")
-        .eq("id", currentUserId)
-        .maybeSingle();
+    const { data: profile, error } =
+        await supabaseClient
+            .from("profiles")
+            .select("tokens, collection, texts_sent")
+            .eq("id", currentUserId)
+            .maybeSingle();
 
     if (error) {
         alert("Could not load stats: " + error.message);
@@ -518,6 +654,8 @@ async function loadStats() {
         Number(profile.texts_sent || 0).toLocaleString();
 }
 
+/* LOGOUT */
+
 async function logoutAccount() {
     await supabaseClient.auth.signOut();
 
@@ -527,21 +665,30 @@ async function logoutAccount() {
     document.getElementById("home").style.display = "flex";
 }
 
+/* RESTORE LOGIN SESSION */
+
 async function restoreSession() {
     const { data } = await supabaseClient.auth.getSession();
 
     if (data.session) {
-        const { data: profile } = await supabaseClient
-            .from("profiles")
-            .select("username")
-            .eq("id", data.session.user.id)
-            .maybeSingle();
+
+        const { data: profile } =
+            await supabaseClient
+                .from("profiles")
+                .select("username")
+                .eq("id", data.session.user.id)
+                .maybeSingle();
 
         if (profile) {
-            await showAccount(data.session.user.id, profile.username);
+            await showAccount(
+                data.session.user.id,
+                profile.username
+            );
         }
     }
 }
+
+/* BUTTONS */
 
 function hourlyReward() {
     alert("Hourly rewards are not set up yet!");
@@ -551,7 +698,10 @@ function openSettings() {
     alert("Settings are coming soon!");
 }
 
+/* START */
+
 restoreSession();
+
 </script>
 
 </body>
