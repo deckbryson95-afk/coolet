@@ -1,429 +1,323 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Coolet</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coolet</title>
 
-    <style>
-        @font-face {
-            font-family: "Puffet";
-            src: url("puffet.ttf") format("truetype");
-        }
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-        body {
-            background-color: #FF9900;
-            background-image:
-                linear-gradient(45deg, #E67E00 25%, transparent 25%),
-                linear-gradient(-45deg, #E67E00 25%, transparent 25%),
-                linear-gradient(45deg, transparent 75%, #E67E00 75%),
-                linear-gradient(-45deg, transparent 75%, #E67E00 75%);
-            background-size: 100px 100px;
-            background-position: 0 0, 0 50px, 50px -50px, -50px 0;
-            background-attachment: fixed;
+<style>
+@font-face {
+    font-family: "Puffet";
+    src: url("puffet.ttf") format("truetype");
+}
 
-            color: white;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            text-align: center;
-        }
+* {
+    box-sizing: border-box;
+}
 
-        .logo {
-            font-family: "Puffet", sans-serif;
-            font-size: 200px;
-            font-weight: normal;
-            margin-bottom: 0;
-        }
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: #ffad42;
+    background-image:
+        linear-gradient(45deg, #f99b2e 25%, transparent 25%),
+        linear-gradient(-45deg, #f99b2e 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #f99b2e 75%),
+        linear-gradient(-45deg, transparent 75%, #f99b2e 75%);
+    background-size: 60px 60px;
+    background-position: 0 0, 0 30px, 30px -30px, -30px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
 
-        p {
-            font-size: 22px;
-            margin-top: 0;
-        }
+.container {
+    text-align: center;
+    padding: 30px;
+}
 
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 40px;
-        }
+.logo {
+    font-family: "Puffet", sans-serif;
+    font-size: 100px;
+    color: white;
+    margin: 0;
+    text-shadow: 4px 4px #b95b20;
+}
 
-        button {
-            cursor: pointer;
-        }
+.subtitle {
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    margin: 5px 0 30px;
+}
 
-        .buttons button {
-            background-color: green;
-            color: white;
-            border: none;
-            padding: 15px 45px;
-            font-size: 20px;
-            font-weight: bold;
-            border-radius: 6px;
-        }
+button {
+    border: none;
+    border-radius: 10px;
+    padding: 13px 25px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 7px;
+}
 
-        .buttons button:hover {
-            background-color: darkgreen;
-        }
+.login-button {
+    background: #38c85a;
+    color: white;
+}
 
-        .hidden {
-            display: none !important;
-        }
+.signup-button {
+    background: #238bdb;
+    color: white;
+}
 
-        .auth-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.65);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-            padding: 20px;
-            box-sizing: border-box;
-        }
+button:hover {
+    filter: brightness(0.92);
+}
 
-        .auth-box {
-            background: #252525;
-            padding: 30px;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 350px;
-            box-sizing: border-box;
-            position: relative;
-        }
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
 
-        .auth-box h2 {
-            font-size: 30px;
-            margin-top: 5px;
-        }
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 350px;
+    text-align: center;
+}
 
-        .auth-box input {
-            display: block;
-            width: 100%;
-            padding: 13px;
-            margin: 12px 0;
-            box-sizing: border-box;
-            border: 2px solid #888;
-            border-radius: 6px;
-            font-size: 16px;
-        }
+.modal-content h2 {
+    margin-top: 0;
+}
 
-        .auth-submit {
-            background: green;
-            color: white;
-            border: none;
-            padding: 13px;
-            width: 100%;
-            border-radius: 6px;
-            font-size: 18px;
-            font-weight: bold;
-            margin-top: 10px;
-        }
+.modal-content input {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin: 12px 0;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
 
-        .auth-submit:hover {
-            background: darkgreen;
-        }
+.submit-button {
+    background: #38c85a;
+    color: white;
+    width: 100%;
+}
 
-        .close-button {
-            position: absolute;
-            right: 12px;
-            top: 10px;
-            background: transparent;
-            color: white;
-            border: none;
-            font-size: 25px;
-        }
+.close-button {
+    background: #ddd;
+    color: #333;
+    width: 100%;
+}
 
-        #authMessage {
-            font-size: 14px;
-            margin-top: 15px;
-            overflow-wrap: anywhere;
-        }
+#message {
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
 
-        #welcomeMessage {
-            font-size: 18px;
-            margin-top: 25px;
-        }
+#accountArea {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
 
-        #logoutButton {
-            background: #333;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 6px;
-            font-size: 16px;
-        }
-
-        @media (max-width: 600px) {
-            .logo {
-                font-size: 90px;
-            }
-        }
-    </style>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+.logout-button {
+    background: #e74c3c;
+    color: white;
+}
+</style>
 </head>
 
 <body>
 
+<div class="container">
     <h1 class="logo">COOLET</h1>
+    <p class="subtitle">Collect, trade, chat and more!</p>
 
-    <p>Collect, trade, chat and more!</p>
-
-    <div class="buttons" id="mainButtons">
-        <button onclick="openAuth('login')">Login</button>
-        <button onclick="openAuth('signup')">Sign Up</button>
+    <div id="buttons">
+        <button class="login-button" onclick="openModal('login')">Login</button>
+        <button class="signup-button" onclick="openModal('signup')">Sign Up</button>
     </div>
 
-    <div id="welcomeArea" class="hidden">
-        <p id="welcomeMessage"></p>
-        <button id="logoutButton" onclick="logout()">Logout</button>
+    <div id="accountArea" style="display:none;"></div>
+</div>
+
+<div class="modal" id="modal">
+    <div class="modal-content">
+        <h2 id="modalTitle">Login</h2>
+
+        <input id="username" placeholder="Username" maxlength="20" autocomplete="username">
+        <input id="password" type="password" placeholder="Password" autocomplete="current-password">
+
+        <button class="submit-button" onclick="submitAccount()">Continue</button>
+        <button class="close-button" onclick="closeModal()">Cancel</button>
+
+        <p id="message"></p>
     </div>
+</div>
 
-    <div class="auth-overlay hidden" id="authOverlay">
-        <div class="auth-box">
+<script>
+const SUPABASE_URL = "https://mfxmatyyvrjxkleiratk.supabase.co";
+const SUPABASE_KEY = "sb_publishable_kfMaUjlxX04k1YWkJTu9mw_fq24cRu9";
 
-            <button class="close-button" onclick="closeAuth()">×</button>
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
-            <h2 id="authTitle">Login</h2>
+let currentMode = "login";
 
-            <form id="authForm">
+function openModal(mode) {
+    currentMode = mode;
+    document.getElementById("modal").style.display = "flex";
+    document.getElementById("modalTitle").textContent =
+        mode === "login" ? "Login" : "Sign Up";
+    document.getElementById("message").textContent = "";
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+}
 
-                <input
-                    type="text"
-                    id="username"
-                    placeholder="Username"
-                    minlength="3"
-                    maxlength="20"
-                    pattern="[a-zA-Z0-9_]+"
-                    autocomplete="username"
-                    required
-                >
+function closeModal() {
+    document.getElementById("modal").style.display = "none";
+}
 
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Password"
-                    minlength="6"
-                    autocomplete="current-password"
-                    required
-                >
+async function submitAccount() {
+    const username = document.getElementById("username").value.trim().toLowerCase();
+    const password = document.getElementById("password").value;
+    const message = document.getElementById("message");
 
-                <button class="auth-submit" id="authSubmit" type="submit">
-                    Login
-                </button>
+    if (!/^[a-z0-9_]{3,20}$/.test(username)) {
+        message.textContent = "Username must be 3–20 characters and use only letters, numbers, or underscores.";
+        return;
+    }
 
-            </form>
+    if (password.length < 6) {
+        message.textContent = "Password must be at least 6 characters.";
+        return;
+    }
 
-            <p id="authMessage"></p>
+    const email = username + "@mfxmatyyvrjxkleiratk.supabase.co";
+    message.textContent = "Please wait...";
 
-        </div>
-    </div>
+    if (currentMode === "signup") {
+        const { data: existing, error: lookupError } = await supabaseClient
+            .from("profiles")
+            .select("username")
+            .eq("username", username)
+            .maybeSingle();
 
-    <script>
-        // SUPABASE CONNECTION
-        const SUPABASE_URL = "https://mfxmatyyvrjxkleiratk.supabase.co";
-        const SUPABASE_KEY = "sb_publishable_kfMaUjlxX04k1YWkJTu9mw_fq24cRu9";
-
-        const supabaseClient = supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY
-        );
-
-        // Internal login address domain.
-        // Players never have to enter an email.
-        const AUTH_EMAIL_DOMAIN = "mfxmatyyvrjxkleiratk.supabase.co";
-
-        let authMode = "login";
-
-        function makeLoginEmail(username) {
-            return username.toLowerCase() + "@" + AUTH_EMAIL_DOMAIN;
+        if (lookupError) {
+            message.textContent = lookupError.message;
+            return;
         }
 
-        function openAuth(mode) {
-            authMode = mode;
-
-            document.getElementById("authOverlay").classList.remove("hidden");
-            document.getElementById("authTitle").textContent =
-                mode === "signup" ? "Create Account" : "Login";
-
-            document.getElementById("authSubmit").textContent =
-                mode === "signup" ? "Create Account" : "Login";
-
-            document.getElementById("password").autocomplete =
-                mode === "signup" ? "new-password" : "current-password";
-
-            document.getElementById("authForm").reset();
-            showMessage("");
+        if (existing) {
+            message.textContent = "That username is already taken!";
+            return;
         }
 
-        function closeAuth() {
-            document.getElementById("authOverlay").classList.add("hidden");
+        const { data, error } = await supabaseClient.auth.signUp({
+            email: email,
+            password: password
+        });
+
+        if (error) {
+            message.textContent = error.message;
+            return;
         }
 
-        function showMessage(message, color = "white") {
-            const messageBox = document.getElementById("authMessage");
-            messageBox.textContent = message;
-            messageBox.style.color = color;
+        if (!data.user) {
+            message.textContent = "Account creation did not finish. Please try again.";
+            return;
         }
 
-        function showLoggedIn(username) {
-            document.getElementById("mainButtons").classList.add("hidden");
-            document.getElementById("welcomeArea").classList.remove("hidden");
+        const { error: profileError } = await supabaseClient
+            .from("profiles")
+            .insert({
+                id: data.user.id,
+                username: username
+            });
 
-            document.getElementById("welcomeMessage").textContent =
-                "Welcome to Coolet, " + username + "!";
-
-            closeAuth();
+        if (profileError) {
+            message.textContent = "Account created, but profile setup failed: " + profileError.message;
+            return;
         }
 
-        // SIGN UP AND LOGIN
-        document.getElementById("authForm").addEventListener(
-            "submit",
-            async function(event) {
-                event.preventDefault();
+        message.textContent = "Account created!";
+        await showAccount(username);
+    } else {
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
 
-                const username = document.getElementById("username")
-                    .value.trim().toLowerCase();
-
-                const password = document.getElementById("password").value;
-
-                const submitButton = document.getElementById("authSubmit");
-
-                if (!/^[a-z0-9_]{3,20}$/.test(username)) {
-                    showMessage(
-                        "Username must be 3–20 characters and use only letters, numbers, or underscores.",
-                        "#ff7777"
-                    );
-                    return;
-                }
-
-                submitButton.disabled = true;
-                submitButton.textContent = "Please wait...";
-
-                try {
-                    const loginEmail = makeLoginEmail(username);
-
-                    if (authMode === "signup") {
-
-                        // Check whether the username is already taken.
-                        const { data: existingUser, error: lookupError } =
-                            await supabaseClient
-                                .from("profiles")
-                                .select("id")
-                                .eq("username", username)
-                                .maybeSingle();
-
-                        if (lookupError) {
-                            throw lookupError;
-                        }
-
-                        if (existingUser) {
-                            throw new Error("That username is already taken.");
-                        }
-
-                        // Create the Supabase account.
-                        const { data, error } =
-                            await supabaseClient.auth.signUp({
-                                email: loginEmail,
-                                password: password,
-                                options: {
-                                    data: {
-                                        username: username
-                                    }
-                                }
-                            });
-
-                        if (error) {
-                            throw error;
-                        }
-
-                        if (!data.user || !data.session) {
-                            throw new Error(
-                                "Account created, but no login session was returned. Check that email confirmation is turned off."
-                            );
-                        }
-
-                        // Save the username in the profiles table.
-                        const { error: profileError } =
-                            await supabaseClient
-                                .from("profiles")
-                                .insert({
-                                    id: data.user.id,
-                                    username: username
-                                });
-
-                        if (profileError) {
-                            await supabaseClient.auth.signOut();
-
-                            throw new Error(
-                                "Your account was created, but your profile could not be saved: " +
-                                profileError.message
-                            );
-                        }
-
-                        showLoggedIn(username);
-                    }
-
-                    else {
-
-                        // Log in using username and password.
-                        const { data, error } =
-                            await supabaseClient.auth.signInWithPassword({
-                                email: loginEmail,
-                                password: password
-                            });
-
-                        if (error) {
-                            throw error;
-                        }
-
-                        showLoggedIn(username);
-                    }
-
-                } catch (error) {
-                    showMessage(error.message, "#ff7777");
-                }
-
-                finally {
-                    submitButton.disabled = false;
-                    submitButton.textContent =
-                        authMode === "signup" ? "Create Account" : "Login";
-                }
-            }
-        );
-
-        // LOG OUT
-        async function logout() {
-            const { error } = await supabaseClient.auth.signOut();
-
-            if (error) {
-                alert(error.message);
-                return;
-            }
-
-            document.getElementById("mainButtons").classList.remove("hidden");
-            document.getElementById("welcomeArea").classList.add("hidden");
+        if (error) {
+            message.textContent = error.message;
+            return;
         }
 
-        // RESTORE LOGIN AFTER REFRESHING
-        async function checkLogin() {
-            const { data, error } = await supabaseClient.auth.getSession();
+        await showAccount(username);
+    }
+}
 
-            if (error) {
-                console.error(error);
-                return;
-            }
+async function showAccount(username) {
+    closeModal();
+    document.getElementById("buttons").style.display = "none";
 
-            if (data.session) {
-                const username =
-                    data.session.user.user_metadata?.username ||
-                    data.session.user.email.split("@")[0];
+    const accountArea = document.getElementById("accountArea");
+    accountArea.style.display = "block";
+    accountArea.innerHTML = "";
 
-                showLoggedIn(username);
-            }
+    const welcome = document.createElement("p");
+    welcome.textContent = "Welcome, " + username + "!";
+
+    const logout = document.createElement("button");
+    logout.className = "logout-button";
+    logout.textContent = "Logout";
+    logout.onclick = logoutAccount;
+
+    accountArea.append(welcome, logout);
+}
+
+async function logoutAccount() {
+    await supabaseClient.auth.signOut();
+    document.getElementById("accountArea").style.display = "none";
+    document.getElementById("buttons").style.display = "block";
+}
+
+async function restoreSession() {
+    const { data } = await supabaseClient.auth.getSession();
+
+    if (data.session) {
+        const { data: profile } = await supabaseClient
+            .from("profiles")
+            .select("username")
+            .eq("id", data.session.user.id)
+            .maybeSingle();
+
+        if (profile) {
+            await showAccount(profile.username);
         }
+    }
+}
 
-        checkLogin();
-
-    </script>
+restoreSession();
+</script>
 
 </body>
 </html>
