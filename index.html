@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -97,28 +96,39 @@ button:hover { filter: brightness(.92); }
 #statsPage {
     display: none;
     min-height: 100vh;
-    padding: 25px;
+    padding: 28px;
 }
 .stats-layout {
-    max-width: 1100px;
+    width: 100%;
+    max-width: 1400px;
     margin: 0 auto;
     display: flex;
-    gap: 20px;
-    align-items: flex-start;
+    gap: 22px;
+    align-items: stretch;
 }
 .sidebar {
-    width: 240px;
+    width: 255px;
+    min-height: calc(100vh - 56px);
     flex-shrink: 0;
-    background: #333;
+    background: #292929;
     color: white;
-    border-radius: 12px;
-    padding: 18px;
+    border-radius: 10px;
+    padding: 20px 16px;
+}
+.sidebar-logo {
+    font-family: "Puffet", sans-serif;
+    font-size: 38px;
+    color: white;
+    text-align: center;
+    margin: 0 0 24px;
+    text-shadow: 2px 2px #b95b20;
 }
 .profile {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 22px;
+    margin: 0 0 26px;
+    padding: 12px 8px;
     overflow-wrap: anywhere;
 }
 .pfp {
@@ -139,9 +149,12 @@ button:hover { filter: brightness(.92); }
 .side-button {
     display: block;
     width: 100%;
+    min-height: 46px;
     margin: 10px 0;
+    padding: 12px 14px;
     color: white;
-    background: #505050;
+    background: #454545;
+    border-radius: 7px;
     text-align: left;
 }
 .reward-button { background: #38b957; }
@@ -151,25 +164,26 @@ button:hover { filter: brightness(.92); }
 .stats-main {
     flex: 1;
     min-width: 0;
-    background: #333;
-    border-radius: 12px;
-    padding: 22px;
+    min-height: calc(100vh - 56px);
+    background: #292929;
+    border-radius: 10px;
+    padding: 26px;
     color: white;
 }
 .stats-title {
-    font-size: 27px;
-    margin: 0 0 20px;
+    font-size: 28px;
+    margin: 0 0 22px;
 }
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
 }
 .stat-card {
-    background: #494949;
-    border-radius: 10px;
-    padding: 22px;
-    min-height: 115px;
+    background: #414141;
+    border-radius: 8px;
+    padding: 20px;
+    min-height: 125px;
 }
 .stat-label {
     font-size: 16px;
@@ -180,11 +194,22 @@ button:hover { filter: brightness(.92); }
     font-size: 30px;
     font-weight: bold;
 }
+
+@media (max-width: 1050px) {
+    .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 @media (max-width: 650px) {
     #statsPage { padding: 12px; }
     .stats-layout { flex-direction: column; }
-    .sidebar { width: 100%; }
-    .stats-main { width: 100%; }
+    .sidebar {
+        width: 100%;
+        min-height: auto;
+    }
+    .stats-main {
+        width: 100%;
+        min-height: auto;
+        padding: 20px;
+    }
 }
 @media (max-width: 400px) {
     .stats-grid { grid-template-columns: 1fr; }
@@ -208,6 +233,8 @@ button:hover { filter: brightness(.92); }
 <div id="statsPage">
     <div class="stats-layout">
         <aside class="sidebar">
+            <h1 class="sidebar-logo">COOLET</h1>
+
             <div class="profile">
                 <div class="pfp" id="pfp">C</div>
                 <div class="profile-name" id="profileName">Player</div>
@@ -216,9 +243,11 @@ button:hover { filter: brightness(.92); }
             <button class="side-button reward-button" onclick="hourlyReward()">
                 Hourly Reward
             </button>
+
             <button class="side-button settings-button" onclick="openSettings()">
                 Settings
             </button>
+
             <button class="side-button logout-button" onclick="logoutAccount()">
                 Logout
             </button>
@@ -226,19 +255,23 @@ button:hover { filter: brightness(.92); }
 
         <main class="stats-main">
             <h2 class="stats-title">Stats</h2>
+
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-label">Tokens</div>
                     <div class="stat-number" id="tokens">0</div>
                 </div>
+
                 <div class="stat-card">
                     <div class="stat-label">All-Time Tokens</div>
                     <div class="stat-number" id="totalTokens">0</div>
                 </div>
+
                 <div class="stat-card">
                     <div class="stat-label">Blooks Unlocked</div>
                     <div class="stat-number" id="blooks">0</div>
                 </div>
+
                 <div class="stat-card">
                     <div class="stat-label">Texts Sent</div>
                     <div class="stat-number" id="textsSent">0</div>
@@ -314,6 +347,7 @@ async function submitAccount() {
             message.textContent = lookupError.message;
             return;
         }
+
         if (existing) {
             message.textContent = "That username is already taken!";
             return;
@@ -328,6 +362,7 @@ async function submitAccount() {
             message.textContent = error.message;
             return;
         }
+
         if (!data.user) {
             message.textContent = "Account creation did not finish. Please try again.";
             return;
