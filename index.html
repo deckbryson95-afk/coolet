@@ -5,7 +5,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Coolet</title>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
@@ -13,10 +12,7 @@
     font-family: "Puffet";
     src: url("puffet.ttf") format("truetype");
 }
-
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
     margin: 0;
@@ -30,17 +26,26 @@ body {
         linear-gradient(-45deg, transparent 75%, #f99b2e 75%);
     background-size: 60px 60px;
     background-position: 0 0, 0 30px, 30px -30px, -30px 0;
+}
+
+button {
+    border: none;
+    border-radius: 9px;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+button:hover { filter: brightness(.92); }
+
+#home {
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-}
-
-.container {
     text-align: center;
-    padding: 30px;
 }
-
+.container { padding: 30px; }
 .logo {
     font-family: "Puffet", sans-serif;
     font-size: 100px;
@@ -48,48 +53,25 @@ body {
     margin: 0;
     text-shadow: 4px 4px #b95b20;
 }
-
 .subtitle {
     font-size: 20px;
     color: white;
     font-weight: bold;
     margin: 5px 0 30px;
 }
-
-button {
-    border: none;
-    border-radius: 10px;
-    padding: 13px 25px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    margin: 7px;
-}
-
-.login-button {
-    background: #38c85a;
-    color: white;
-}
-
-.signup-button {
-    background: #238bdb;
-    color: white;
-}
-
-button:hover {
-    filter: brightness(0.92);
-}
+.login-button { background: #38c85a; color: white; }
+.signup-button { background: #238bdb; color: white; }
 
 .modal {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0,0,0,.6);
     justify-content: center;
     align-items: center;
     padding: 15px;
+    z-index: 10;
 }
-
 .modal-content {
     background: white;
     padding: 30px;
@@ -98,11 +80,6 @@ button:hover {
     max-width: 350px;
     text-align: center;
 }
-
-.modal-content h2 {
-    margin-top: 0;
-}
-
 .modal-content input {
     display: block;
     width: 100%;
@@ -112,61 +89,172 @@ button:hover {
     border-radius: 8px;
     font-size: 16px;
 }
+.submit-button { background: #38c85a; color: white; width: 100%; }
+.close-button { background: #ddd; color: #333; width: 100%; }
+#message { font-size: 14px; overflow-wrap: anywhere; }
 
-.submit-button {
-    background: #38c85a;
+/* STATS PAGE */
+#statsPage {
+    display: none;
+    min-height: 100vh;
+    padding: 25px;
+}
+.stats-layout {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+.sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    background: #333;
     color: white;
-    width: 100%;
+    border-radius: 12px;
+    padding: 18px;
 }
-
-.close-button {
-    background: #ddd;
-    color: #333;
-    width: 100%;
-}
-
-#message {
-    font-size: 14px;
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
     overflow-wrap: anywhere;
 }
-
-#accountArea {
+.pfp {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #ffad42;
+    border: 3px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: white;
-    font-size: 18px;
+    font-size: 24px;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+.profile-name { font-size: 18px; font-weight: bold; }
+.side-button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    color: white;
+    background: #505050;
+    text-align: left;
+}
+.reward-button { background: #38b957; }
+.settings-button { background: #238bdb; }
+.logout-button { background: #d94b42; }
+
+.stats-main {
+    flex: 1;
+    min-width: 0;
+    background: #333;
+    border-radius: 12px;
+    padding: 22px;
+    color: white;
+}
+.stats-title {
+    font-size: 27px;
+    margin: 0 0 20px;
+}
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+}
+.stat-card {
+    background: #494949;
+    border-radius: 10px;
+    padding: 22px;
+    min-height: 115px;
+}
+.stat-label {
+    font-size: 16px;
+    color: #ddd;
+    margin-bottom: 12px;
+}
+.stat-number {
+    font-size: 30px;
     font-weight: bold;
 }
-
-.logout-button {
-    background: #e74c3c;
-    color: white;
+@media (max-width: 650px) {
+    #statsPage { padding: 12px; }
+    .stats-layout { flex-direction: column; }
+    .sidebar { width: 100%; }
+    .stats-main { width: 100%; }
+}
+@media (max-width: 400px) {
+    .stats-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-    <h1 class="logo">COOLET</h1>
-    <p class="subtitle">Collect, trade, chat and more!</p>
-
-    <div id="buttons">
-        <button class="login-button" onclick="openModal('login')">Login</button>
-        <button class="signup-button" onclick="openModal('signup')">Sign Up</button>
+<div id="home">
+    <div class="container">
+        <h1 class="logo">COOLET</h1>
+        <p class="subtitle">Collect, trade, chat and more!</p>
+        <div id="buttons">
+            <button class="login-button" onclick="openModal('login')">Login</button>
+            <button class="signup-button" onclick="openModal('signup')">Sign Up</button>
+        </div>
     </div>
+</div>
 
-    <div id="accountArea" style="display:none;"></div>
+<div id="statsPage">
+    <div class="stats-layout">
+        <aside class="sidebar">
+            <div class="profile">
+                <div class="pfp" id="pfp">C</div>
+                <div class="profile-name" id="profileName">Player</div>
+            </div>
+
+            <button class="side-button reward-button" onclick="hourlyReward()">
+                Hourly Reward
+            </button>
+            <button class="side-button settings-button" onclick="openSettings()">
+                Settings
+            </button>
+            <button class="side-button logout-button" onclick="logoutAccount()">
+                Logout
+            </button>
+        </aside>
+
+        <main class="stats-main">
+            <h2 class="stats-title">Stats</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Tokens</div>
+                    <div class="stat-number" id="tokens">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">All-Time Tokens</div>
+                    <div class="stat-number" id="totalTokens">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Blooks Unlocked</div>
+                    <div class="stat-number" id="blooks">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Texts Sent</div>
+                    <div class="stat-number" id="textsSent">0</div>
+                </div>
+            </div>
+        </main>
+    </div>
 </div>
 
 <div class="modal" id="modal">
     <div class="modal-content">
         <h2 id="modalTitle">Login</h2>
-
         <input id="username" placeholder="Username" maxlength="20" autocomplete="username">
         <input id="password" type="password" placeholder="Password" autocomplete="current-password">
-
         <button class="submit-button" onclick="submitAccount()">Continue</button>
         <button class="close-button" onclick="closeModal()">Cancel</button>
-
         <p id="message"></p>
     </div>
 </div>
@@ -181,6 +269,7 @@ const supabaseClient = window.supabase.createClient(
 );
 
 let currentMode = "login";
+let currentUserId = null;
 
 function openModal(mode) {
     currentMode = mode;
@@ -225,7 +314,6 @@ async function submitAccount() {
             message.textContent = lookupError.message;
             return;
         }
-
         if (existing) {
             message.textContent = "That username is already taken!";
             return;
@@ -240,7 +328,6 @@ async function submitAccount() {
             message.textContent = error.message;
             return;
         }
-
         if (!data.user) {
             message.textContent = "Account creation did not finish. Please try again.";
             return;
@@ -248,18 +335,14 @@ async function submitAccount() {
 
         const { error: profileError } = await supabaseClient
             .from("profiles")
-            .insert({
-                id: data.user.id,
-                username: username
-            });
+            .insert({ id: data.user.id, username: username });
 
         if (profileError) {
             message.textContent = "Account created, but profile setup failed: " + profileError.message;
             return;
         }
 
-        message.textContent = "Account created!";
-        await showAccount(username);
+        await showAccount(data.user.id, username);
     } else {
         const { data, error } = await supabaseClient.auth.signInWithPassword({
             email: email,
@@ -271,33 +354,59 @@ async function submitAccount() {
             return;
         }
 
-        await showAccount(username);
+        await showAccount(data.user.id, username);
     }
 }
 
-async function showAccount(username) {
+async function showAccount(userId, username) {
+    currentUserId = userId;
     closeModal();
-    document.getElementById("buttons").style.display = "none";
+    document.getElementById("home").style.display = "none";
+    document.getElementById("statsPage").style.display = "block";
+    document.getElementById("profileName").textContent = username;
+    document.getElementById("pfp").textContent = username.charAt(0).toUpperCase();
 
-    const accountArea = document.getElementById("accountArea");
-    accountArea.style.display = "block";
-    accountArea.innerHTML = "";
+    await loadStats();
+}
 
-    const welcome = document.createElement("p");
-    welcome.textContent = "Welcome, " + username + "!";
+async function loadStats() {
+    if (!currentUserId) return;
 
-    const logout = document.createElement("button");
-    logout.className = "logout-button";
-    logout.textContent = "Logout";
-    logout.onclick = logoutAccount;
+    const { data: profile, error } = await supabaseClient
+        .from("profiles")
+        .select("tokens, total_tokens, collection, texts_sent")
+        .eq("id", currentUserId)
+        .maybeSingle();
 
-    accountArea.append(welcome, logout);
+    if (error) {
+        alert("Could not load stats: " + error.message);
+        return;
+    }
+
+    if (!profile) return;
+
+    const collection = Array.isArray(profile.collection)
+        ? profile.collection
+        : [];
+
+    document.getElementById("tokens").textContent =
+        Number(profile.tokens || 0).toLocaleString();
+
+    document.getElementById("totalTokens").textContent =
+        Number(profile.total_tokens || 0).toLocaleString();
+
+    document.getElementById("blooks").textContent =
+        collection.length.toLocaleString();
+
+    document.getElementById("textsSent").textContent =
+        Number(profile.texts_sent || 0).toLocaleString();
 }
 
 async function logoutAccount() {
     await supabaseClient.auth.signOut();
-    document.getElementById("accountArea").style.display = "none";
-    document.getElementById("buttons").style.display = "block";
+    currentUserId = null;
+    document.getElementById("statsPage").style.display = "none";
+    document.getElementById("home").style.display = "flex";
 }
 
 async function restoreSession() {
@@ -311,9 +420,17 @@ async function restoreSession() {
             .maybeSingle();
 
         if (profile) {
-            await showAccount(profile.username);
+            await showAccount(data.session.user.id, profile.username);
         }
     }
+}
+
+function hourlyReward() {
+    alert("Hourly rewards are not set up yet!");
+}
+
+function openSettings() {
+    alert("Settings are coming soon!");
 }
 
 restoreSession();
