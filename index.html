@@ -5,6 +5,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Coolet</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
@@ -13,12 +18,14 @@
     src: url("puffet.ttf") format("truetype");
 }
 
-* { box-sizing: border-box; }
+* {
+    box-sizing: border-box;
+}
 
 body {
     margin: 0;
     min-height: 100vh;
-    font-family: Arial, sans-serif;
+    font-family: "Nunito Sans", sans-serif;
     background-color: #ffad42;
     background-image:
         linear-gradient(45deg, #f99b2e 25%, transparent 25%),
@@ -29,18 +36,23 @@ body {
     background-position: 0 0, 0 30px, 30px -30px, -30px 0;
 }
 
+button,
+input {
+    font-family: "Nunito Sans", sans-serif;
+}
+
 button {
     border: none;
     border-radius: 9px;
     padding: 12px 20px;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 800;
     cursor: pointer;
 }
 
-button:hover { filter: brightness(.92); }
-
-/* HOME */
+button:hover {
+    filter: brightness(.92);
+}
 
 #home {
     min-height: 100vh;
@@ -50,7 +62,9 @@ button:hover { filter: brightness(.92); }
     text-align: center;
 }
 
-.container { padding: 30px; }
+.container {
+    padding: 30px;
+}
 
 .logo {
     font-family: "Puffet", sans-serif;
@@ -63,14 +77,19 @@ button:hover { filter: brightness(.92); }
 .subtitle {
     font-size: 20px;
     color: white;
-    font-weight: bold;
+    font-weight: 800;
     margin: 5px 0 30px;
 }
 
-.login-button { background: #38c85a; color: white; }
-.signup-button { background: #238bdb; color: white; }
+.login-button {
+    background: #38c85a;
+    color: white;
+}
 
-/* LOGIN MODAL */
+.signup-button {
+    background: #238bdb;
+    color: white;
+}
 
 .modal {
     display: none;
@@ -124,270 +143,178 @@ button:hover { filter: brightness(.92); }
 #statsPage {
     display: none;
     min-height: 100vh;
-    color: white;
+    padding: 25px;
 }
 
 .stats-layout {
+    max-width: 1100px;
+    margin: 0 auto;
     display: flex;
-    min-height: 100vh;
-    width: 100%;
+    gap: 20px;
+    align-items: flex-start;
 }
-
-/* SIDEBAR */
 
 .sidebar {
-    width: 230px;
+    width: 240px;
     flex-shrink: 0;
-    min-height: 100vh;
-    padding: 22px 10px;
-    background: rgba(35, 35, 35, 0.96);
-    border-right: 5px solid #202020;
+    background: #333;
     color: white;
+    border-radius: 12px;
+    padding: 18px;
 }
 
-.sidebar-logo {
-    font-family: "Puffet", sans-serif;
-    font-size: 42px;
-    text-align: center;
-    margin: 10px 0 55px;
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+    overflow-wrap: anywhere;
+}
+
+.pfp {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #ffad42;
+    border: 3px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: white;
+    font-size: 24px;
+    font-weight: 900;
+    flex-shrink: 0;
+}
+
+.profile-name {
+    font-size: 18px;
+    font-weight: 900;
 }
 
 .side-button {
     display: block;
     width: 100%;
-    padding: 13px 15px;
-    margin: 5px 0;
-    border-radius: 8px;
-    background: transparent;
+    margin: 10px 0;
     color: white;
-    font-size: 19px;
-    font-weight: normal;
+    background: #505050;
     text-align: left;
 }
 
-.side-button:hover { background: #444; }
-.side-button.active { background: #484848; }
-
-.logout-button {
-    margin-top: 35px;
-    background: #a9362e;
+.reward-button {
+    background: #38b957;
 }
 
-/* MAIN CONTENT */
+.settings-button {
+    background: #238bdb;
+}
+
+.logout-button {
+    background: #d94b42;
+}
 
 .stats-main {
     flex: 1;
     min-width: 0;
-    padding: 70px 26px 35px;
-}
-
-/* PROFILE */
-
-.profile-area {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 28px;
-}
-
-.pfp {
-    width: 180px;
-    height: 155px;
-    flex-shrink: 0;
-    border-radius: 18px;
-    background: #ffad16;
-    border: 4px solid #f28b00;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 65px;
-    font-weight: bold;
-}
-
-.profile-info {
-    background: rgba(35, 35, 35, 0.94);
-    border-radius: 18px;
-    padding: 22px 48px;
-    min-width: 405px;
-    min-height: 128px;
-}
-
-.profile-name {
-    font-size: 40px;
-    font-weight: bold;
-    margin-bottom: 8px;
-    overflow-wrap: anywhere;
-}
-
-.profile-hint {
-    font-size: 21px;
-    color: #ddd;
-}
-
-/* ACTION BUTTONS */
-
-.action-buttons {
-    display: flex;
-    gap: 14px;
-    margin-bottom: 45px;
-}
-
-.action-button {
-    width: 305px;
-    height: 72px;
-    border-radius: 17px;
-    color: white;
-    font-size: 25px;
-}
-
-.reward-button { background: #f15b16; }
-.settings-button { background: #168fe0; }
-
-/* STATS PANEL */
-
-.stats-panel {
     background: #202020;
     border: 2px solid #202020;
-    border-radius: 14px;
-    padding: 0 20px 27px;
-    width: 100%;
-    box-shadow: none;
+    border-radius: 12px;
+    padding: 22px;
+    color: white;
 }
 
 .stats-title {
-    display: inline-block;
-    background: #202020;
-    font-family: "Puffet", sans-serif;
-    font-size: 43px;
-    margin: -1px 0 15px;
-    padding: 8px 10px;
-    color: white;
-    border-radius: 15px 15px 0 0;
+    font-size: 27px;
+    font-weight: 900;
+    margin: 0 0 20px;
 }
 
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
+    gap: 15px;
 }
 
 .stat-card {
-    min-height: 150px;
-    background: #484848;
-    border: none;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 18px;
+    background: #494949;
+    border-radius: 10px;
+    padding: 22px;
+    min-height: 115px;
 }
 
-.stat-information { text-align: center; }
-
 .stat-label {
-    font-size: 27px;
-    font-weight: bold;
+    font-size: 16px;
+    font-weight: 700;
     color: #ddd;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .stat-number {
-    font-size: 65px;
-    font-weight: bold;
-    line-height: 1;
+    font-size: 30px;
+    font-weight: 900;
 }
 
-/* RESPONSIVE */
+@media (max-width: 800px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
 
-@media (max-width: 900px) {
-    .sidebar { width: 180px; }
-    .stats-main { padding: 30px 15px; }
-
-    .profile-info {
-        min-width: 0;
-        padding: 18px;
+@media (max-width: 650px) {
+    #statsPage {
+        padding: 12px;
     }
 
-    .pfp {
-        width: 110px;
-        height: 110px;
+    .stats-layout {
+        flex-direction: column;
     }
 
-    .profile-name { font-size: 25px; }
+    .sidebar {
+        width: 100%;
+    }
 
+    .stats-main {
+        width: 100%;
+    }
+}
+
+@media (max-width: 400px) {
     .stats-grid {
         grid-template-columns: 1fr;
     }
 
-    .action-button {
-        width: 50%;
-        font-size: 18px;
+    .logo {
+        font-size: 72px;
     }
-}
-
-@media (max-width: 520px) {
-    .stats-layout { flex-direction: column; }
-
-    .sidebar {
-        width: 100%;
-        min-height: auto;
-    }
-
-    .sidebar-logo { margin: 5px 0 15px; }
-
-    .side-button {
-        display: inline-block;
-        width: auto;
-    }
-
-    .profile-area { flex-wrap: wrap; }
-
-    .action-buttons { flex-wrap: wrap; }
-
-    .action-button { width: 100%; }
 }
 </style>
 </head>
 
 <body>
 
-<!-- HOME PAGE -->
-
 <div id="home">
     <div class="container">
         <h1 class="logo">COOLET</h1>
         <p class="subtitle">Collect, trade, chat and more!</p>
-
         <div id="buttons">
-            <button class="login-button" onclick="openModal('login')">
-                Login
-            </button>
-
-            <button class="signup-button" onclick="openModal('signup')">
-                Sign Up
-            </button>
+            <button class="login-button" onclick="openModal('login')">Login</button>
+            <button class="signup-button" onclick="openModal('signup')">Sign Up</button>
         </div>
     </div>
 </div>
 
-<!-- STATS PAGE -->
-
 <div id="statsPage">
     <div class="stats-layout">
-
         <aside class="sidebar">
-            <h1 class="sidebar-logo">COOLET</h1>
+            <div class="profile">
+                <div class="pfp" id="pfp">C</div>
+                <div class="profile-name" id="profileName">Player</div>
+            </div>
 
-            <button class="side-button active">Stats</button>
-            <button class="side-button">Leaderboard</button>
-            <button class="side-button">Chat</button>
-            <button class="side-button">Collection</button>
-            <button class="side-button">Market</button>
-            <button class="side-button">Blooks</button>
+            <button class="side-button reward-button" onclick="hourlyReward()">
+                Hourly Reward
+            </button>
 
-            <button class="side-button" onclick="openSettings()">
+            <button class="side-button settings-button" onclick="openSettings()">
                 Settings
             </button>
 
@@ -397,100 +324,47 @@ button:hover { filter: brightness(.92); }
         </aside>
 
         <main class="stats-main">
+            <h2 class="stats-title">Stats</h2>
 
-            <div class="profile-area">
-                <div class="pfp" id="pfp">C</div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Tokens</div>
+                    <div class="stat-number" id="tokens">0</div>
+                </div>
 
-                <div class="profile-info">
-                    <div class="profile-name" id="profileName">Player</div>
-                    <div class="profile-hint">Click your pfp to change it!</div>
+                <div class="stat-card">
+                    <div class="stat-label">Blooks Unlocked</div>
+                    <div class="stat-number" id="blooks">0</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-label">Texts Sent</div>
+                    <div class="stat-number" id="textsSent">0</div>
                 </div>
             </div>
-
-            <div class="action-buttons">
-                <button class="action-button reward-button" onclick="hourlyReward()">
-                    Hourly Reward
-                </button>
-
-                <button class="action-button settings-button" onclick="openSettings()">
-                    Settings
-                </button>
-            </div>
-
-            <section class="stats-panel">
-                <h2 class="stats-title">Stats</h2>
-
-                <div class="stats-grid">
-
-                    <div class="stat-card">
-                        <div class="stat-information">
-                            <div class="stat-label">Tokens</div>
-                            <div class="stat-number" id="tokens">0</div>
-                        </div>
-                    </div>
-
-                    <div class="stat-card">
-                        <div class="stat-information">
-                            <div class="stat-label">Blooks Unlocked</div>
-                            <div class="stat-number" id="blooks">0</div>
-                        </div>
-                    </div>
-
-                    <div class="stat-card">
-                        <div class="stat-information">
-                            <div class="stat-label">Texts Sent</div>
-                            <div class="stat-number" id="textsSent">0</div>
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-
         </main>
     </div>
 </div>
-
-<!-- LOGIN / SIGNUP MODAL -->
 
 <div class="modal" id="modal">
     <div class="modal-content">
         <h2 id="modalTitle">Login</h2>
 
-        <input
-            id="username"
-            placeholder="Username"
-            maxlength="20"
-            autocomplete="username"
-        >
+        <input id="username" placeholder="Username" maxlength="20" autocomplete="username">
 
-        <input
-            id="password"
-            type="password"
-            placeholder="Password"
-            autocomplete="current-password"
-        >
+        <input id="password" type="password" placeholder="Password" autocomplete="current-password">
 
-        <button class="submit-button" onclick="submitAccount()">
-            Continue
-        </button>
+        <button class="submit-button" onclick="submitAccount()">Continue</button>
 
-        <button class="close-button" onclick="closeModal()">
-            Cancel
-        </button>
+        <button class="close-button" onclick="closeModal()">Cancel</button>
 
         <p id="message"></p>
     </div>
 </div>
 
 <script>
-
-/* SUPABASE */
-
-const SUPABASE_URL =
-    "https://mfxmatyyvrjxkleiratk.supabase.co";
-
-const SUPABASE_KEY =
-    "sb_publishable_kfMaUjlxX04k1YWkJTu9mw_fq24cRu9";
+const SUPABASE_URL = "https://mfxmatyyvrjxkleiratk.supabase.co";
+const SUPABASE_KEY = "sb_publishable_kfMaUjlxX04k1YWkJTu9mw_fq24cRu9";
 
 const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
@@ -500,12 +374,11 @@ const supabaseClient = window.supabase.createClient(
 let currentMode = "login";
 let currentUserId = null;
 
-/* MODAL */
-
 function openModal(mode) {
     currentMode = mode;
 
     document.getElementById("modal").style.display = "flex";
+
     document.getElementById("modalTitle").textContent =
         mode === "login" ? "Login" : "Sign Up";
 
@@ -518,12 +391,8 @@ function closeModal() {
     document.getElementById("modal").style.display = "none";
 }
 
-/* ACCOUNT */
-
 async function submitAccount() {
-    const username = document.getElementById("username")
-        .value.trim().toLowerCase();
-
+    const username = document.getElementById("username").value.trim().toLowerCase();
     const password = document.getElementById("password").value;
     const message = document.getElementById("message");
 
@@ -538,18 +407,16 @@ async function submitAccount() {
         return;
     }
 
-    const email =
-        username + "@mfxmatyyvrjxkleiratk.supabase.co";
+    const email = username + "@mfxmatyyvrjxkleiratk.supabase.co";
 
     message.textContent = "Please wait...";
 
     if (currentMode === "signup") {
-        const { data: existing, error: lookupError } =
-            await supabaseClient
-                .from("profiles")
-                .select("username")
-                .eq("username", username)
-                .maybeSingle();
+        const { data: existing, error: lookupError } = await supabaseClient
+            .from("profiles")
+            .select("username")
+            .eq("username", username)
+            .maybeSingle();
 
         if (lookupError) {
             message.textContent = lookupError.message;
@@ -561,11 +428,10 @@ async function submitAccount() {
             return;
         }
 
-        const { data, error } =
-            await supabaseClient.auth.signUp({
-                email: email,
-                password: password
-            });
+        const { data, error } = await supabaseClient.auth.signUp({
+            email: email,
+            password: password
+        });
 
         if (error) {
             message.textContent = error.message;
@@ -578,29 +444,26 @@ async function submitAccount() {
             return;
         }
 
-        const { error: profileError } =
-            await supabaseClient
-                .from("profiles")
-                .insert({
-                    id: data.user.id,
-                    username: username
-                });
+        const { error: profileError } = await supabaseClient
+            .from("profiles")
+            .insert({
+                id: data.user.id,
+                username: username
+            });
 
         if (profileError) {
             message.textContent =
-                "Account created, but profile setup failed: " +
-                profileError.message;
+                "Account created, but profile setup failed: " + profileError.message;
             return;
         }
 
         await showAccount(data.user.id, username);
 
     } else {
-        const { data, error } =
-            await supabaseClient.auth.signInWithPassword({
-                email: email,
-                password: password
-            });
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
 
         if (error) {
             message.textContent = error.message;
@@ -611,8 +474,6 @@ async function submitAccount() {
     }
 }
 
-/* SHOW ACCOUNT */
-
 async function showAccount(userId, username) {
     currentUserId = userId;
 
@@ -620,7 +481,6 @@ async function showAccount(userId, username) {
 
     document.getElementById("home").style.display = "none";
     document.getElementById("statsPage").style.display = "block";
-
     document.getElementById("profileName").textContent = username;
     document.getElementById("pfp").textContent =
         username.charAt(0).toUpperCase();
@@ -628,17 +488,14 @@ async function showAccount(userId, username) {
     await loadStats();
 }
 
-/* LOAD STATS */
-
 async function loadStats() {
     if (!currentUserId) return;
 
-    const { data: profile, error } =
-        await supabaseClient
-            .from("profiles")
-            .select("tokens, total_tokens, collection, texts_sent")
-            .eq("id", currentUserId)
-            .maybeSingle();
+    const { data: profile, error } = await supabaseClient
+        .from("profiles")
+        .select("tokens, collection, texts_sent")
+        .eq("id", currentUserId)
+        .maybeSingle();
 
     if (error) {
         alert("Could not load stats: " + error.message);
@@ -661,8 +518,6 @@ async function loadStats() {
         Number(profile.texts_sent || 0).toLocaleString();
 }
 
-/* LOGOUT */
-
 async function logoutAccount() {
     await supabaseClient.auth.signOut();
 
@@ -672,26 +527,21 @@ async function logoutAccount() {
     document.getElementById("home").style.display = "flex";
 }
 
-/* RESTORE SESSION */
-
 async function restoreSession() {
     const { data } = await supabaseClient.auth.getSession();
 
     if (data.session) {
-        const { data: profile } =
-            await supabaseClient
-                .from("profiles")
-                .select("username")
-                .eq("id", data.session.user.id)
-                .maybeSingle();
+        const { data: profile } = await supabaseClient
+            .from("profiles")
+            .select("username")
+            .eq("id", data.session.user.id)
+            .maybeSingle();
 
         if (profile) {
             await showAccount(data.session.user.id, profile.username);
         }
     }
 }
-
-/* BUTTONS */
 
 function hourlyReward() {
     alert("Hourly rewards are not set up yet!");
@@ -702,7 +552,6 @@ function openSettings() {
 }
 
 restoreSession();
-
 </script>
 
 </body>
